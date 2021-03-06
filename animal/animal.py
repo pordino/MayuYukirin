@@ -9,7 +9,7 @@ from redbot.core import commands
 # Libs
 import aiohttp
 
-catapi = "http://aws.random.cat/meow"
+catapi = "https://shibe.online/api/cats"
 dogapi = "https://dog.ceo/api/breeds/image/random"
 foxapi = "http://wohlsoft.ru/images/foxybot/randomfox.php"
 pugapi = "http://pugme.herokuapp.com/random"
@@ -22,7 +22,7 @@ class Animal(BaseCog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.session = aiohttp.ClientSession(loop=self.bot.loop)
+        self.session = aiohttp.ClientSession()
         self.catapi = catapi
         self.dogapi = dogapi
         self.foxapi = foxapi
@@ -35,9 +35,9 @@ class Animal(BaseCog):
         try:
             async with self.session.get(self.catapi) as r:
                 result = await r.json()
-            await ctx.send(result['file'])
+            await ctx.send(result[0])
         except:
-            await ctx.send("API Error")
+            await ctx.send("API Error. Probably just a hiccup.\nIf this error persist for several days, please report it")
 
     @commands.command()
     @commands.cooldown(1, 120, commands.BucketType.guild)
@@ -52,10 +52,10 @@ class Animal(BaseCog):
             for x in range(0,amount):
                 async with self.session.get(self.catapi) as r:
                     api_result = await r.json()
-                    results.append(api_result['file'])
+                    results.append(api_result[0])
             await ctx.send("\n".join(results))
         except:
-            await ctx.send("API Error")
+            await ctx.send("API Error. Probably just a hiccup.\nIf this error persist for several days, please report it")
 
     @commands.command()
     @commands.cooldown(1, 60, commands.BucketType.guild)
@@ -66,7 +66,7 @@ class Animal(BaseCog):
                 result = await r.json()
             await ctx.send(result['message'])
         except:
-            await ctx.send("API Error")
+            await ctx.send("API Error. Probably just a hiccup.\nIf this error persist for several days, please report it")
 
     @commands.command()
     @commands.cooldown(1, 120, commands.BucketType.guild)
@@ -84,7 +84,7 @@ class Animal(BaseCog):
                     results.append(api_result['message'])
             await ctx.send("\n".join(results))
         except:
-            await ctx.send("API Error")
+            await ctx.send("API Error. Probably just a hiccup.\nIf this error persist for several days, please report it")
 
     @commands.command()
     @commands.cooldown(1, 60, commands.BucketType.guild)
@@ -95,7 +95,7 @@ class Animal(BaseCog):
                 result = await r.json()
             await ctx.send(result['file'])
         except:
-            await ctx.send("API Error")
+            await ctx.send("API Error. Probably just a hiccup.\nIf this error persist for several days, please report it")
 
     @commands.command()
     @commands.cooldown(1, 120, commands.BucketType.guild)
@@ -113,7 +113,7 @@ class Animal(BaseCog):
                     results.append(api_result['file'])
             await ctx.send("\n".join(results))
         except:
-            await ctx.send("API Error")
+            await ctx.send("API Error. Probably just a hiccup.\nIf this error persist for several days, please report it")
 
     @commands.command()
     @commands.cooldown(1, 60, commands.BucketType.guild)
@@ -124,7 +124,7 @@ class Animal(BaseCog):
                 result = await r.json()
             await ctx.send(result['pug'])
         except:
-            await ctx.send("API Error")
+            await ctx.send("API Error. Probably just a hiccup.\nIf this error persist for several days, please report it")
 
     @commands.command()
     @commands.cooldown(1, 120, commands.BucketType.guild)
@@ -142,7 +142,7 @@ class Animal(BaseCog):
                     results.append(api_result['pug'])
             await ctx.send("\n".join(results))
         except:
-            await ctx.send("API Error")
+            await ctx.send("API Error. Probably just a hiccup.\nIf this error persist for several days, please report it")
 
     def cog_unload(self):
         self.bot.loop.create_task(self.session.close())
